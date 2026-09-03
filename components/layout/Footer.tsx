@@ -3,7 +3,7 @@ import Link from "next/link";
 
 const quickLinks = [
   { label: "Nosotros", href: "#nosotros" },
-  { label: "Niveles educativos", href: "#niveles" },
+  { label: "Servicios educativos", href: "/servicios-educativos" },
   { label: "Vida escolar", href: "#vida-escolar" },
   { label: "Admisión", href: "#admision" },
 ];

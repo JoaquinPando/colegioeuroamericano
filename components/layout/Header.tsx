@@ -6,7 +6,7 @@ import Link from "next/link";
 
 const navLinks = [
   { label: "Nosotros", href: "#nosotros" },
-  { label: "Niveles", href: "#niveles" },
+  { label: "Servicios", href: "/servicios-educativos" },
   { label: "Vida escolar", href: "#vida-escolar" },
   { label: "Admisión", href: "#admision" },
 ];
