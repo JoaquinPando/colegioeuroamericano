@@ -2,6 +2,7 @@
 
 import { useRef, useState, useEffect, useCallback } from "react";
 import ActivityCard from "@/components/activities/ActivityCard";
+import Reveal from "@/components/ui/Reveal";
 import type { Activity } from "@/lib/activities/types";
 
 export default function ActivitiesCarousel({
@@ -66,14 +67,15 @@ export default function ActivitiesCarousel({
         className="flex snap-x snap-mandatory gap-6 overflow-x-auto scroll-smooth [&::-webkit-scrollbar]:hidden"
         style={{ scrollbarWidth: "none" }}
       >
-        {activities.map((activity) => (
-          <div
+        {activities.map((activity, index) => (
+          <Reveal
             key={`${activity.title}-${activity.date}`}
             data-carousel-item
+            delay={(index % 3) * 100}
             className="w-[85%] shrink-0 snap-start sm:w-[45%] lg:w-[31%]"
           >
             <ActivityCard activity={activity} />
-          </div>
+          </Reveal>
         ))}
       </div>
 

@@ -12,30 +12,30 @@ export default function Hero() {
       </video>
       <div className="absolute inset-0 bg-hueso/40" />
 
-      <span className="relative rounded-full bg-dorado px-4 py-1.5 text-sm font-semibold text-institucional">
+      <span className="hero-anim hero-anim-1 relative rounded-full bg-dorado px-4 py-1.5 text-sm font-semibold text-institucional">
         Admisión 2026 abierta
       </span>
 
-      <h1 className="relative max-w-2xl text-3xl font-bold leading-tight tracking-tight text-institucional sm:text-4xl lg:text-5xl">
+      <h1 className="hero-anim hero-anim-2 relative max-w-2xl text-3xl font-bold leading-tight tracking-tight text-institucional sm:text-4xl lg:text-5xl">
         Formamos a los líderes del mañana
       </h1>
 
-      <p className="relative max-w-xl text-lg leading-8 text-texto">
+      <p className="hero-anim hero-anim-3 relative max-w-xl text-lg leading-8 text-texto">
         En el Colegio Euroamericano combinamos exigencia académica, valores y
         una comunidad comprometida para acompañar a cada estudiante en su
         camino hacia el éxito.
       </p>
 
-      <div className="relative flex flex-col gap-4 sm:flex-row">
+      <div className="hero-anim hero-anim-4 relative flex flex-col gap-4 sm:flex-row">
         <a
           href="#admision"
-          className="rounded-full bg-institucional px-6 py-3 font-medium text-hueso transition-colors hover:bg-institucional/90"
+          className="rounded-full bg-institucional px-6 py-3 font-medium text-hueso transition-all duration-300 hover:-translate-y-0.5 hover:bg-institucional/90 hover:shadow-lg"
         >
           Solicitar admisión
         </a>
         <a
           href="#nosotros"
-          className="rounded-full border-2 border-institucional px-6 py-3 font-medium text-institucional transition-colors hover:bg-institucional/10"
+          className="rounded-full border-2 border-institucional px-6 py-3 font-medium text-institucional transition-all duration-300 hover:-translate-y-0.5 hover:bg-institucional/10"
         >
           Conocer más
         </a>

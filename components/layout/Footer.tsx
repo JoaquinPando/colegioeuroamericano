@@ -66,7 +66,7 @@ export default function Footer() {
                   d="M4 5c0 8.284 6.716 15 15 15h1a1 1 0 001-1v-2.586a1 1 0 00-.293-.707l-2.414-2.414a1 1 0 00-1.414 0l-1.086 1.086a1 1 0 01-1.263.13 12.06 12.06 0 01-4.242-4.242 1 1 0 01.13-1.263l1.086-1.086a1 1 0 000-1.414L8.293 4.293A1 1 0 007.586 4H5a1 1 0 00-1 1z"
                 />
               </svg>
-              <a href="tel:+51997382368" className="hover:text-dorado">
+              <a href="tel:+51997382368" className="transition-colors duration-200 hover:text-dorado">
                 +51 997 382 368
               </a>
             </li>
@@ -86,7 +86,7 @@ export default function Footer() {
               </svg>
               <a
                 href="mailto:admision@colegioeuroamericano.edu.pe"
-                className="hover:text-dorado"
+                className="transition-colors duration-200 hover:text-dorado"
               >
                 admision@colegioeuroamericano.edu.pe
               </a>
@@ -114,7 +114,7 @@ export default function Footer() {
           <ul className="flex flex-col gap-3 text-sm text-hueso/80">
             {quickLinks.map((link) => (
               <li key={link.href}>
-                <a href={link.href} className="hover:text-dorado">
+                <a href={link.href} className="transition-colors duration-200 hover:text-dorado">
                   {link.label}
                 </a>
               </li>

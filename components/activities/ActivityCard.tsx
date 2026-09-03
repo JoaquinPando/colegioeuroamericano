@@ -25,8 +25,8 @@ export default function ActivityCard({
   const [coverImageId, ...restImageIds] = activity.imageIds;
 
   return (
-    <article className="flex flex-col overflow-hidden rounded-2xl bg-white shadow-sm">
-      <div className="relative aspect-[4/3] w-full bg-institucional/10">
+    <article className="group flex flex-col overflow-hidden rounded-2xl bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-md">
+      <div className="relative aspect-[4/3] w-full overflow-hidden bg-institucional/10">
         {coverImageId ? (
           <button
             type="button"
@@ -39,7 +39,7 @@ export default function ActivityCard({
               src={`/api/drive-image/${coverImageId}`}
               alt={activity.title}
               fill
-              className="object-cover"
+              className="object-cover transition-transform duration-500 group-hover:scale-105"
               sizes="(min-width: 1024px) 33vw, 100vw"
             />
           </button>

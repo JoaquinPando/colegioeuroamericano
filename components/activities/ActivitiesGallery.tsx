@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 import ActivityCard from "@/components/activities/ActivityCard";
 import Lightbox from "@/components/activities/Lightbox";
+import Reveal from "@/components/ui/Reveal";
 import type { Activity } from "@/lib/activities/types";
 
 export default function ActivitiesGallery({
@@ -30,13 +31,17 @@ export default function ActivitiesGallery({
     <>
       <div className="mx-auto flex w-full max-w-3xl flex-col gap-6">
         {activities.map((activity, activityIndex) => (
-          <ActivityCard
+          <Reveal
             key={`${activity.title}-${activity.date}`}
-            activity={activity}
-            variant="full"
-            imageStartIndex={startIndexes[activityIndex]}
-            onImageClick={setOpenIndex}
-          />
+            delay={(activityIndex % 4) * 80}
+          >
+            <ActivityCard
+              activity={activity}
+              variant="full"
+              imageStartIndex={startIndexes[activityIndex]}
+              onImageClick={setOpenIndex}
+            />
+          </Reveal>
         ))}
       </div>
 
