@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
-import ActivityCard from "@/components/activities/ActivityCard";
+import ActivitiesGallery from "@/components/activities/ActivitiesGallery";
 import EmptyState from "@/components/activities/EmptyState";
 import { getAllActivities } from "@/lib/activities/getActivities";
 
@@ -27,15 +27,7 @@ export default async function ActividadesPage() {
         {activities.length === 0 ? (
           <EmptyState message="Aún no hay actividades publicadas." />
         ) : (
-          <div className="mx-auto flex w-full max-w-3xl flex-col gap-6">
-            {activities.map((activity) => (
-              <ActivityCard
-                key={`${activity.title}-${activity.date}`}
-                activity={activity}
-                variant="full"
-              />
-            ))}
-          </div>
+          <ActivitiesGallery activities={activities} />
         )}
       </main>
       <Footer />

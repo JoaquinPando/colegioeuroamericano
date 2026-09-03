@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 
 const quickLinks = [
   { label: "Nosotros", href: "#nosotros" },
@@ -12,7 +13,7 @@ export default function Footer() {
     <footer className="bg-institucional px-6 py-12 text-hueso sm:px-10 lg:px-16">
       <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-4">
         <div className="flex flex-col gap-4">
-          <div className="flex items-center gap-3">
+          <Link href="/" className="flex items-center gap-3">
             <Image
               src="/logo.png"
               alt="Colegio Euroamericano San Diego"
@@ -20,7 +21,7 @@ export default function Footer() {
               height={246}
               className="h-12 w-12"
             />
-          </div>
+          </Link>
           <p className="text-sm leading-6 text-hueso/80">
             En el Colegio Euroamericano combinamos exigencia académica,
             valores y una comunidad comprometida para acompañar a cada

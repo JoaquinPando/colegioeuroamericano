@@ -1,15 +1,15 @@
 import Link from "next/link";
 import { getLatestActivities } from "@/lib/activities/getActivities";
-import ActivityCard from "@/components/activities/ActivityCard";
+import ActivitiesCarousel from "@/components/home/ActivitiesCarousel";
 import EmptyState from "@/components/activities/EmptyState";
 
 export default async function ActivitiesSection() {
-  const activities = await getLatestActivities(3);
+  const activities = await getLatestActivities(12);
 
   return (
     <section
       id="actividades"
-      className="flex flex-col gap-8 px-6 py-16 sm:px-10 lg:px-16"
+      className="flex flex-col gap-8 bg-hueso px-6 py-16 sm:px-10 lg:px-16"
     >
       <div className="flex flex-col items-center gap-2 text-center">
         <h2 className="text-3xl font-bold text-institucional">
@@ -23,14 +23,7 @@ export default async function ActivitiesSection() {
       {activities.length === 0 ? (
         <EmptyState message="Muy pronto publicaremos las actividades del año." />
       ) : (
-        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {activities.map((activity) => (
-            <ActivityCard
-              key={`${activity.title}-${activity.date}`}
-              activity={activity}
-            />
-          ))}
-        </div>
+        <ActivitiesCarousel activities={activities} />
       )}
 
       <Link

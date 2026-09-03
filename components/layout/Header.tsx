@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 
 const navLinks = [
   { label: "Nosotros", href: "#nosotros" },
@@ -16,7 +17,7 @@ export default function Header() {
   return (
     <header className="relative bg-hueso px-6 py-4 sm:px-10 lg:px-16">
       <div className="flex items-center justify-between">
-        <a href="#" className="flex items-center gap-3">
+        <Link href="/" className="flex items-center gap-3">
           <Image
             src="/logo.png"
             alt="Colegio Euroamericano San Diego"
@@ -25,7 +26,7 @@ export default function Header() {
             priority
             className="h-12 w-12 sm:h-14 sm:w-14"
           />
-        </a>
+        </Link>
 
         <nav className="hidden md:block">
           <ul className="flex items-center gap-8 font-medium text-texto">
