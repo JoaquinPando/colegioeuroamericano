@@ -8,7 +8,7 @@ const navLinks = [
   { label: "Nosotros", href: "#nosotros" },
   { label: "Servicios", href: "/servicios-educativos" },
   { label: "Vida escolar", href: "#vida-escolar" },
-  { label: "Admisión", href: "#admision" },
+  { label: "Admisión", href: "/admision" },
 ];
 
 export default function Header() {

@@ -5,7 +5,7 @@ const quickLinks = [
   { label: "Nosotros", href: "#nosotros" },
   { label: "Servicios educativos", href: "/servicios-educativos" },
   { label: "Vida escolar", href: "#vida-escolar" },
-  { label: "Admisión", href: "#admision" },
+  { label: "Admisión", href: "/admision" },
 ];
 
 export default function Footer() {
