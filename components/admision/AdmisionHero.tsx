@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { ROUTES } from "@/lib/routes";
 
 export default function AdmisionHero() {
   return (
@@ -7,7 +8,7 @@ export default function AdmisionHero() {
         aria-label="Breadcrumb"
         className="hero-anim hero-anim-1 flex items-center gap-2 text-sm text-hueso/70"
       >
-        <Link href="/" className="transition-colors duration-200 hover:text-dorado">
+        <Link href={ROUTES.home} className="transition-colors duration-200 hover:text-dorado">
           Home
         </Link>
         <span>/</span>
@@ -24,12 +25,12 @@ export default function AdmisionHero() {
         como postulante.
       </p>
 
-      <a
+      <Link
         href="#formulario-admision"
         className="hero-anim hero-anim-4 mt-2 rounded-full bg-dorado px-6 py-3 font-semibold text-institucional transition-all duration-300 hover:-translate-y-0.5 hover:bg-dorado/90 hover:shadow-md"
       >
         Regístrate como postulante
-      </a>
+      </Link>
     </section>
   );
 }

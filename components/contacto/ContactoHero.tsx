@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { ROUTES } from "@/lib/routes";
 
-export default function NosotrosHero() {
+export default function ContactoHero() {
   return (
     <section className="relative flex flex-col items-center gap-4 overflow-hidden bg-institucional px-6 py-16 text-center sm:px-10 sm:py-20 lg:px-16">
       <nav
@@ -12,16 +12,16 @@ export default function NosotrosHero() {
           Home
         </Link>
         <span>/</span>
-        <span className="text-dorado">Nosotros</span>
+        <span className="text-dorado">Contacto</span>
       </nav>
 
       <h1 className="hero-anim hero-anim-2 text-3xl font-bold tracking-tight text-hueso sm:text-4xl lg:text-5xl">
-        Nosotros
+        Contáctanos
       </h1>
 
       <p className="hero-anim hero-anim-3 max-w-xl text-lg leading-8 text-hueso/80">
-        Más de dos décadas formando estudiantes con valores, exigencia
-        académica y vocación de servicio.
+        Escríbenos, llámanos o visítanos. Nuestro equipo está listo para
+        responder tus consultas y acompañarte en lo que necesites.
       </p>
     </section>
   );

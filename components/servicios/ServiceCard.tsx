@@ -1,12 +1,13 @@
 import Image from "next/image";
 import Link from "next/link";
+import { ROUTES } from "@/lib/routes";
 import type { Service } from "@/lib/servicios/types";
 import ServiceIcon from "./ServiceIcon";
 
 export default function ServiceCard({ service }: { service: Service }) {
   return (
     <Link
-      href={`/servicios-educativos/${service.slug}`}
+      href={`${ROUTES.servicios}/${service.slug}`}
       className="group flex flex-col overflow-hidden rounded-2xl bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-md"
     >
       <div className="relative h-40 w-full overflow-hidden sm:h-48">

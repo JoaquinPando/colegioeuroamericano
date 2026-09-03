@@ -1,9 +1,9 @@
-const WHATSAPP_URL = "https://wa.me/51997382368";
+import { EXTERNAL_LINKS } from "@/lib/routes";
 
 export default function WhatsAppButton() {
   return (
     <a
-      href={WHATSAPP_URL}
+      href={EXTERNAL_LINKS.whatsapp}
       target="_blank"
       rel="noopener noreferrer"
       aria-label="Chatear por WhatsApp"

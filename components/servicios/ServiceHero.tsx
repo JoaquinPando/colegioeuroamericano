@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { ROUTES } from "@/lib/routes";
 import type { Service } from "@/lib/servicios/types";
 import ServiceIcon from "./ServiceIcon";
 
@@ -20,12 +21,12 @@ export default function ServiceHero({ service }: { service: Service }) {
         aria-label="Breadcrumb"
         className="relative flex items-center gap-2 text-sm text-hueso/70"
       >
-        <Link href="/" className="transition-colors duration-200 hover:text-dorado">
+        <Link href={ROUTES.home} className="transition-colors duration-200 hover:text-dorado">
           Home
         </Link>
         <span>/</span>
         <Link
-          href="/servicios-educativos"
+          href={ROUTES.servicios}
           className="transition-colors duration-200 hover:text-dorado"
         >
           Servicios educativos

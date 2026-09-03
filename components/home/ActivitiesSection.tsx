@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { ROUTES } from "@/lib/routes";
 import { getLatestActivities } from "@/lib/activities/getActivities";
 import ActivitiesCarousel from "@/components/home/ActivitiesCarousel";
 import EmptyState from "@/components/activities/EmptyState";
@@ -29,7 +30,7 @@ export default async function ActivitiesSection() {
 
       <Reveal delay={150} className="mx-auto">
         <Link
-          href="/actividades"
+          href={ROUTES.actividades}
           className="rounded-full bg-institucional px-6 py-3 font-medium text-hueso transition-all duration-300 hover:-translate-y-0.5 hover:bg-institucional/90 hover:shadow-lg"
         >
           Ver todas

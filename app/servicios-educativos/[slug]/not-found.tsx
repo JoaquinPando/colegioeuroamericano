@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
+import { ROUTES } from "@/lib/routes";
 
 export default function ServicioNotFound() {
   return (
@@ -14,7 +15,7 @@ export default function ServicioNotFound() {
           El servicio que buscas no existe o fue movido.
         </p>
         <Link
-          href="/servicios-educativos"
+          href={ROUTES.servicios}
           className="rounded-full bg-institucional px-5 py-2.5 font-medium text-hueso transition-colors hover:bg-institucional/90"
         >
           Ver todos los servicios

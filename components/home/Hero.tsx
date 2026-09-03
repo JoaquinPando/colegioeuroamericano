@@ -1,3 +1,6 @@
+import Link from "next/link";
+import { ROUTES } from "@/lib/routes";
+
 export default function Hero() {
   return (
     <section className="relative flex flex-col items-center gap-6 overflow-hidden px-6 py-16 text-center sm:px-10 sm:py-24 lg:px-16">
@@ -27,18 +30,18 @@ export default function Hero() {
       </p>
 
       <div className="hero-anim hero-anim-4 relative flex flex-col gap-4 sm:flex-row">
-        <a
-          href="#admision"
+        <Link
+          href={ROUTES.admision}
           className="rounded-full bg-institucional px-6 py-3 font-medium text-hueso transition-all duration-300 hover:-translate-y-0.5 hover:bg-institucional/90 hover:shadow-lg"
         >
-          Solicitar admisión
-        </a>
-        <a
-          href="#nosotros"
+          Solicitar información
+        </Link>
+        <Link
+          href={ROUTES.nosotros}
           className="rounded-full border-2 border-institucional px-6 py-3 font-medium text-institucional transition-all duration-300 hover:-translate-y-0.5 hover:bg-institucional/10"
         >
-          Conocer más
-        </a>
+          Conócenos
+        </Link>
       </div>
     </section>
   );

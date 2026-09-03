@@ -1,11 +1,13 @@
 import Image from "next/image";
 import Link from "next/link";
+import { ROUTES, EXTERNAL_LINKS } from "@/lib/routes";
 
 const quickLinks = [
-  { label: "Nosotros", href: "#nosotros" },
-  { label: "Servicios educativos", href: "/servicios-educativos" },
-  { label: "Vida escolar", href: "#vida-escolar" },
-  { label: "Admisión", href: "/admision" },
+  { label: "Nosotros", href: ROUTES.nosotros },
+  { label: "Servicios educativos", href: ROUTES.servicios },
+  { label: "Vida escolar", href: ROUTES.vidaEscolar },
+  { label: "Admisión", href: ROUTES.admision },
+  { label: "Contacto", href: ROUTES.contacto },
 ];
 
 export default function Footer() {
@@ -13,14 +15,22 @@ export default function Footer() {
     <footer className="bg-institucional px-6 py-12 text-hueso sm:px-10 lg:px-16">
       <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-4">
         <div className="flex flex-col gap-4">
-          <Link href="/" className="flex items-center gap-3">
+          <Link href={ROUTES.home} className="flex items-center gap-3">
             <Image
               src="/logo.png"
               alt="Colegio Euroamericano San Diego"
               width={246}
               height={246}
-              className="h-12 w-12"
+              className="h-12 w-12 shrink-0"
             />
+            <span className="flex flex-col leading-tight whitespace-nowrap text-hueso">
+              <span className="text-sm font-extrabold tracking-tight sm:text-base">
+                I.E.P. EUROAMERICANO
+              </span>
+              <span className="text-[9px] font-semibold tracking-[0.15em] text-hueso/70 sm:text-[10px] sm:tracking-[0.2em]">
+                SAN DIEGO
+              </span>
+            </span>
           </Link>
           <p className="text-sm leading-6 text-hueso/80">
             En el Colegio Euroamericano combinamos exigencia académica,
@@ -97,7 +107,7 @@ export default function Footer() {
         <div className="flex flex-col gap-4">
           <h3 className="font-semibold text-dorado">Síguenos</h3>
           <a
-            href="https://www.facebook.com/euroamericanoschool"
+            href={EXTERNAL_LINKS.facebook}
             target="_blank"
             rel="noopener noreferrer"
             aria-label="Facebook"
@@ -114,9 +124,9 @@ export default function Footer() {
           <ul className="flex flex-col gap-3 text-sm text-hueso/80">
             {quickLinks.map((link) => (
               <li key={link.href}>
-                <a href={link.href} className="transition-colors duration-200 hover:text-dorado">
+                <Link href={link.href} className="transition-colors duration-200 hover:text-dorado">
                   {link.label}
-                </a>
+                </Link>
               </li>
             ))}
           </ul>
