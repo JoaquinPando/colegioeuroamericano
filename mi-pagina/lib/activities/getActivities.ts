@@ -1,81 +1,87 @@
-import { fetchActivitiesRows } from "@/lib/google/sheets";
-import { extractDriveId, getFolderImageIds } from "@/lib/google/drive";
-import type { Activity } from "./types";
+import type { Activity, ActivityImage } from "./types";
 
-interface ParsedRow {
-  title: string;
-  date: string;
-  description: string;
-  folderId: string | null;
+const BACKEND_URL = process.env.BACKEND_URL ?? "http://localhost:8000";
+
+interface ApiFoto {
+  url?: unknown;
+  miniatura?: unknown;
 }
 
-// Sheets cuenta los números de serie de fecha desde el 30 de diciembre de 1899.
-const SHEETS_DATE_EPOCH = Date.UTC(1899, 11, 30);
-
-function parseSheetDate(value: unknown): string | null {
-  if (typeof value === "number") {
-    const date = new Date(SHEETS_DATE_EPOCH + value * 86400000);
-    return Number.isNaN(date.getTime()) ? null : date.toISOString().slice(0, 10);
-  }
-
-  if (typeof value === "string") {
-    const trimmed = value.trim();
-    if (/^\d{4}-\d{2}-\d{2}$/.test(trimmed)) {
-      return Number.isNaN(new Date(`${trimmed}T00:00:00`).getTime())
-        ? null
-        : trimmed;
-    }
-  }
-
-  return null;
+interface ApiActividad {
+  titulo?: unknown;
+  fecha?: unknown;
+  descripcion?: unknown;
+  fotos?: unknown;
 }
 
-function parseRow(row: unknown[]): ParsedRow | null {
-  const [titulo, fecha, descripcion, carpetaFotos] = row;
-
-  const title = typeof titulo === "string" ? titulo.trim() : "";
-  const date = parseSheetDate(fecha);
-
-  if (!title || !date) {
+function parseImage(foto: ApiFoto): ActivityImage | null {
+  if (typeof foto?.url !== "string" || foto.url === "") {
     return null;
   }
 
-  const folderIdRaw = typeof carpetaFotos === "string" ? carpetaFotos.trim() : "";
-
   return {
-    title,
-    date,
-    description: typeof descripcion === "string" ? descripcion.trim() : "",
-    folderId: folderIdRaw ? extractDriveId(folderIdRaw) : null,
+    url: foto.url,
+    thumbnailUrl:
+      typeof foto.miniatura === "string" && foto.miniatura !== ""
+        ? foto.miniatura
+        : foto.url,
   };
 }
 
-export async function getAllActivities(): Promise<Activity[]> {
+function parseActivity(actividad: ApiActividad): Activity | null {
+  const { titulo, fecha, descripcion, fotos } = actividad;
+
+  if (typeof titulo !== "string" || typeof fecha !== "string") {
+    return null;
+  }
+
+  return {
+    title: titulo,
+    date: fecha,
+    description: typeof descripcion === "string" ? descripcion : "",
+    images: Array.isArray(fotos)
+      ? fotos
+          .map(parseImage)
+          .filter((image): image is ActivityImage => image !== null)
+      : [],
+  };
+}
+
+async function fetchActivities(limit?: number): Promise<Activity[]> {
+  const url = new URL("/api/actividades", BACKEND_URL);
+
+  if (limit !== undefined) {
+    url.searchParams.set("limit", String(limit));
+  }
+
   try {
-    const rows = await fetchActivitiesRows();
-    const parsedRows = rows
-      .map(parseRow)
-      .filter((row): row is ParsedRow => row !== null);
+    const response = await fetch(url, { next: { revalidate: 3600 } });
 
-    const activities = await Promise.all(
-      parsedRows.map(async (row): Promise<Activity> => ({
-        title: row.title,
-        date: row.date,
-        description: row.description,
-        imageIds: row.folderId
-          ? await getFolderImageIds(row.folderId).catch(() => [])
-          : [],
-      }))
-    );
+    if (!response.ok) {
+      throw new Error(`El backend respondió ${response.status}.`);
+    }
 
-    return activities.sort((a, b) => b.date.localeCompare(a.date));
+    const data: unknown = await response.json();
+
+    if (!Array.isArray(data)) {
+      throw new Error("El backend no devolvió una lista de actividades.");
+    }
+
+    return data
+      .map(parseActivity)
+      .filter((activity): activity is Activity => activity !== null);
   } catch (error) {
-    console.error("No se pudieron cargar las actividades desde Google Sheets:", error);
+    // Si el backend no está disponible la página se muestra vacía en lugar
+    // de romper el build.
+    console.error("No se pudieron cargar las actividades:", error);
     return [];
   }
 }
 
+export async function getAllActivities(): Promise<Activity[]> {
+  return fetchActivities();
+}
+
 export async function getLatestActivities(count: number): Promise<Activity[]> {
-  const all = await getAllActivities();
-  return all.slice(0, count);
+  return fetchActivities(count);
 }

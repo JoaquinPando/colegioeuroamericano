@@ -4,7 +4,7 @@ import { useEffect, useCallback } from "react";
 import Image from "next/image";
 
 export interface LightboxImage {
-  id: string;
+  url: string;
   alt: string;
 }
 
@@ -85,7 +85,7 @@ export default function Lightbox({
         onClick={(event) => event.stopPropagation()}
       >
         <Image
-          src={`/api/drive-image/${current.id}`}
+          src={current.url}
           alt={current.alt}
           fill
           className="object-contain"

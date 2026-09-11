@@ -22,12 +22,12 @@ export default function ActivityCard({
   onImageClick?: (index: number) => void;
   imageStartIndex?: number;
 }) {
-  const [coverImageId, ...restImageIds] = activity.imageIds;
+  const [coverImage, ...restImages] = activity.images;
 
   return (
     <article className="group flex flex-col overflow-hidden rounded-2xl bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-md">
       <div className="relative aspect-[4/3] w-full overflow-hidden bg-institucional/10">
-        {coverImageId ? (
+        {coverImage ? (
           <button
             type="button"
             onClick={() => onImageClick?.(imageStartIndex)}
@@ -36,7 +36,7 @@ export default function ActivityCard({
             className="relative block h-full w-full disabled:cursor-default"
           >
             <Image
-              src={`/api/drive-image/${coverImageId}`}
+              src={coverImage.url}
               alt={activity.title}
               fill
               className="object-cover transition-transform duration-500 group-hover:scale-105"
@@ -62,11 +62,11 @@ export default function ActivityCard({
           </p>
         )}
 
-        {variant === "full" && restImageIds.length > 0 && (
+        {variant === "full" && restImages.length > 0 && (
           <div className="mt-2 grid grid-cols-4 gap-2 sm:grid-cols-6">
-            {restImageIds.map((id, restIndex) => (
+            {restImages.map((image, restIndex) => (
               <button
-                key={id}
+                key={image.url}
                 type="button"
                 onClick={() => onImageClick?.(imageStartIndex + 1 + restIndex)}
                 disabled={!onImageClick}
@@ -74,7 +74,7 @@ export default function ActivityCard({
                 className="relative aspect-square overflow-hidden rounded-lg disabled:cursor-default"
               >
                 <Image
-                  src={`/api/drive-image/${id}`}
+                  src={image.thumbnailUrl}
                   alt={activity.title}
                   fill
                   className="object-cover"

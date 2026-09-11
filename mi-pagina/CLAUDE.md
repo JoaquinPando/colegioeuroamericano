@@ -6,7 +6,10 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Repository layout
 
-This repo's git root (`D:\Tesis\Web`) is **not** the app itself — the Next.js project lives in the `mi-pagina/` subdirectory. Run all commands from `mi-pagina/`, not the repo root.
+This repo's git root (`D:\Tesis\Web`) is **not** the app itself. It holds two projects:
+
+- `mi-pagina/` — the Next.js site. Run all the npm commands from here, not the repo root.
+- `backend/` — a small PHP + MySQL backend that publishes the activities shown on the site (see `backend/README.md`).
 
 ## Commands
 
@@ -30,14 +33,34 @@ This project pins `next@16.3.4`, a version newer than most training data. Conven
 
 ## Architecture
 
-This is a stock `create-next-app` scaffold (App Router) for a school website ("Colegio Euroamericano") — currently just the generated template with no custom routes, components, or data layer yet:
+App Router website for a school ("Colegio Euroamericano"), with six sections:
+`/` (home), `/nosotros`, `/servicios-educativos` (grid + one SSG page per
+service), `/actividades`, `/admision` and `/contacto`.
 
 - `app/layout.tsx` — root layout, loads Geist fonts, wraps all pages
-- `app/page.tsx` — home page (still the default starter content)
 - `app/globals.css` — global styles; styling uses Tailwind CSS v4 (via `@tailwindcss/postcss`, no `tailwind.config` file — v4 is CSS-config-driven)
+- `components/` — grouped by section (`home/`, `nosotros/`, `servicios/`, `activities/`, `admision/`, `contacto/`), plus `layout/` (Header, Footer, WhatsAppButton) and `ui/` (Reveal, AnimatedCounter)
+- `lib/routes.ts` — every internal route and external link lives here; don't hardcode paths in components
+- `lib/servicios/data.ts` — the services content, hardcoded (no CMS)
 - Path alias `@/*` maps to the `mi-pagina/` root (see `tsconfig.json`)
 
-As real pages/components/features are added, prefer extending this structure (App Router conventions under `app/`) rather than introducing a parallel `pages/` directory.
+The contact and admission forms are still front-end only: they validate and
+show a success state, but nothing is sent anywhere yet (see their `TODO`s).
+
+Add new pages/components under the existing `app/` and `components/`
+structure rather than introducing a parallel `pages/` directory.
+
+## Activities backend (PHP)
+
+Activities and their photos come from a small PHP + MySQL backend in
+`backend/` (sibling of `mi-pagina/` in the git root), which replaced an
+earlier Google Sheets + Drive integration — it was too hard to maintain for
+the school staff. The backend ships its own admin panel where they create an
+activity and drag in the photos.
+
+- `lib/activities/getActivities.ts` fetches `GET /api/actividades` from the backend and degrades to an empty list if it is down, so the build never breaks
+- The backend host must be set in `BACKEND_URL` (see `.env.example`) and is also read by `next.config.ts` to allow `next/image` to optimize the photos
+- Setup and how to run it: `backend/README.md`
 
 ## Paleta de colores del proyecto
 - Verde institucional (primario): #1B4D3E

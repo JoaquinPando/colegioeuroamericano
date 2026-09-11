@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from "react";
 import ActivityCard from "@/components/activities/ActivityCard";
-import Lightbox from "@/components/activities/Lightbox";
+import Lightbox, { type LightboxImage } from "@/components/activities/Lightbox";
 import Reveal from "@/components/ui/Reveal";
 import type { Activity } from "@/lib/activities/types";
 
@@ -15,12 +15,12 @@ export default function ActivitiesGallery({
 
   const { startIndexes, images } = useMemo(() => {
     const starts: number[] = [];
-    const flat: { id: string; alt: string }[] = [];
+    const flat: LightboxImage[] = [];
 
     for (const activity of activities) {
       starts.push(flat.length);
-      for (const id of activity.imageIds) {
-        flat.push({ id, alt: activity.title });
+      for (const image of activity.images) {
+        flat.push({ url: image.url, alt: activity.title });
       }
     }
 
