@@ -55,7 +55,11 @@ async function fetchActivities(limit?: number): Promise<Activity[]> {
   }
 
   try {
-    const response = await fetch(url, { next: { revalidate: 3600 } });
+    const response = await fetch(url, {
+      // El backend avisa a /api/revalidar al publicar; el revalidate horario
+      // queda como red de seguridad por si ese aviso se pierde.
+      next: { revalidate: 3600, tags: ["actividades"] },
+    });
 
     if (!response.ok) {
       throw new Error(`El backend respondió ${response.status}.`);

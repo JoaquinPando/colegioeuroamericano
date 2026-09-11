@@ -28,13 +28,21 @@ Entra al panel      →   Guarda la actividad en MySQL
 Escribe título,         y las fotos en disco
 fecha y descripción     (original + miniatura de 600px)
 Arrastra las fotos                    │
-                                      ▼
+                                      ├── avisa ────→   descarta su caché
+                                      │                        │
+                                      ▼                        ▼
                         GET /api/actividades  ──────→  /actividades
                                                         y carrusel del home
 ```
 
-El sitio consulta la API cada hora (ISR). Si el backend está apagado, las
-páginas se muestran sin actividades en lugar de romperse.
+Lo publicado **aparece al instante**: al guardar, el backend le avisa al sitio
+(`POST /api/revalidar`, con una clave compartida) y este descarta la copia que
+tenía guardada. Si ese aviso se pierde —porque el sitio estaba apagado, por
+ejemplo— el sitio igual se pone al día solo, porque además vuelve a consultar
+la API una vez por hora.
+
+Si el backend está apagado, las páginas se muestran sin actividades en lugar
+de romperse.
 
 > Antes esto se resolvía con un Google Sheet y carpetas de Google Drive. Se
 > reemplazó porque mantener ese esquema era demasiado complicado para quien
@@ -90,7 +98,7 @@ archivo por defecto, muy poco para varias fotos de celular.
 | URL | Qué es |
 |---|---|
 | http://localhost:3000 | Sitio público |
-| http://localhost:8000/panel | Panel de carga de actividades |
+| http://localhost:8000/panel | Panel de carga de actividades (hay un enlace discreto al pie del sitio) |
 | http://localhost:8000/api/actividades | API que consume el sitio |
 
 ## Secciones del sitio
@@ -112,7 +120,8 @@ Ninguna se versiona: en el repo solo viajan los `.env.example`.
 
 | Variable | Para qué |
 |---|---|
-| `BACKEND_URL` | URL del backend PHP. También la lee `next.config.ts` para autorizar las fotos en `next/image`. |
+| `BACKEND_URL` | URL del backend PHP. También la leen `next.config.ts`, para autorizar las fotos en `next/image`, y el pie de página, para el enlace al panel. |
+| `REVALIDATE_TOKEN` | Clave con la que el backend avisa de los cambios. Tiene que coincidir con `SITIO_TOKEN` del backend. |
 
 **`backend/.env`**
 
@@ -122,6 +131,7 @@ Ninguna se versiona: en el repo solo viajan los `.env.example`.
 | `PANEL_USUARIO`, `PANEL_CLAVE_HASH` | Acceso al panel (la contraseña se guarda hasheada) |
 | `APP_URL` | Base con la que se arman las URLs públicas de las fotos |
 | `UPLOADS_DIR` | Dónde se guardan las fotos |
+| `SITIO_URL`, `SITIO_TOKEN` | A qué sitio avisar cuando cambian las actividades, y con qué clave |
 
 ## Estado actual
 
@@ -131,6 +141,7 @@ Ninguna se versiona: en el repo solo viajan los `.env.example`.
 - Panel de actividades completo: alta, edición, borrado, y borrado de fotos sueltas
 - Validación real del tipo de archivo, orientación EXIF y miniaturas automáticas
 - Al borrar una actividad o una foto, los archivos se eliminan también del disco
+- Lo que se publica aparece en el sitio al instante, sin esperar ni reconstruir nada
 
 **Pendiente**
 

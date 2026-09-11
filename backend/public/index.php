@@ -14,6 +14,7 @@ if (PHP_SAPI === 'cli-server') {
 
 require_once __DIR__ . '/../src/actividades.php';
 require_once __DIR__ . '/../src/auth.php';
+require_once __DIR__ . '/../src/sitio.php';
 
 $metodo = $_SERVER['REQUEST_METHOD'] ?? 'GET';
 $ruta = rtrim(parse_url($_SERVER['REQUEST_URI'] ?? '/', PHP_URL_PATH) ?: '/', '/') ?: '/';
@@ -94,6 +95,7 @@ try {
             if ($errores === []) {
                 $id = actividad_crear($datos['titulo'], $datos['fecha'], $datos['descripcion']);
                 $fallidas = fotos_subir($id, $_FILES['fotos'] ?? null);
+                avisar_al_sitio();
 
                 avisar(
                     $fallidas === []
@@ -133,6 +135,7 @@ try {
             if ($errores === []) {
                 actividad_actualizar($id, $datos['titulo'], $datos['fecha'], $datos['descripcion']);
                 $fallidas = fotos_subir($id, $_FILES['fotos'] ?? null);
+                avisar_al_sitio();
 
                 avisar(
                     $fallidas === []
@@ -167,6 +170,7 @@ try {
         if ($metodo === 'POST') {
             csrf_verificar();
             actividad_eliminar($id);
+            avisar_al_sitio();
             avisar('Se eliminó la actividad «' . $actividad['titulo'] . '».');
             redirigir('/panel');
         }
@@ -183,6 +187,7 @@ try {
             redirigir('/panel');
         }
 
+        avisar_al_sitio();
         avisar('Se eliminó la foto.');
         redirigir('/panel/editar?id=' . $actividadId);
     }

@@ -60,6 +60,8 @@ activity and drag in the photos.
 
 - `lib/activities/getActivities.ts` fetches `GET /api/actividades` from the backend and degrades to an empty list if it is down, so the build never breaks
 - The backend host must be set in `BACKEND_URL` (see `.env.example`) and is also read by `next.config.ts` to allow `next/image` to optimize the photos
+- On every change the backend calls `POST /api/revalidar` with a shared token (`REVALIDATE_TOKEN` / `SITIO_TOKEN`), which calls `revalidateTag("actividades", { expire: 0 })` — the `expire: 0` matters, since Next 16 otherwise serves the stale copy once more
+- The footer links to the panel using `BACKEND_URL`; keep Footer a server component or that env var stops resolving
 - Setup and how to run it: `backend/README.md`
 
 ## Paleta de colores del proyecto

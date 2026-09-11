@@ -2,6 +2,9 @@ import Image from "next/image";
 import Link from "next/link";
 import { ROUTES, EXTERNAL_LINKS } from "@/lib/routes";
 
+// El panel de carga lo sirve el backend PHP, en su propio origen.
+const backendUrl = process.env.BACKEND_URL ?? "http://localhost:8000";
+
 const quickLinks = [
   { label: "Nosotros", href: ROUTES.nosotros },
   { label: "Servicios educativos", href: ROUTES.servicios },
@@ -133,8 +136,16 @@ export default function Footer() {
         </div>
       </div>
 
-      <div className="mt-10 border-t border-hueso/20 pt-6 text-center text-sm text-hueso/70">
-        © 2026 I.E.P. Euroamericano. Todos los derechos reservados.
+      <div className="mt-10 flex flex-col items-center gap-2 border-t border-hueso/20 pt-6 text-center text-sm text-hueso/70 sm:flex-row sm:justify-center sm:gap-6">
+        <span>© 2026 I.E.P. Euroamericano. Todos los derechos reservados.</span>
+        <a
+          href={`${backendUrl}/panel`}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-hueso/50 transition-colors duration-200 hover:text-dorado"
+        >
+          Acceso al panel
+        </a>
       </div>
     </footer>
   );

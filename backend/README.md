@@ -18,7 +18,8 @@ No usa Composer ni ninguna dependencia externa.
 cp .env.example .env
 ```
 
-Editá `.env` y completá los datos de MySQL (`DB_USUARIO`, `DB_CLAVE`).
+Editá `.env` y completá los datos de MySQL (`DB_USUARIO`, `DB_CLAVE`), y
+`SITIO_TOKEN` con la misma clave que `REVALIDATE_TOKEN` del sitio.
 Si la contraseña tiene espacios o caracteres raros, ponela entre comillas.
 
 ### 2. Contraseña del panel
@@ -75,6 +76,7 @@ src/db.php              conexión PDO
 src/auth.php            login, sesión y CSRF
 src/actividades.php     alta, edición y borrado de actividades
 src/fotos.php           validación, orientación EXIF y miniaturas
+src/sitio.php           aviso al sitio Next.js cuando cambian las actividades
 src/vistas/             pantallas del panel
 ```
 
@@ -109,5 +111,8 @@ público en la web.
 - Se valida el tipo real del archivo (no la extensión) y se aplica la
   orientación EXIF, así las fotos de celular no salen acostadas.
 - Al borrar una actividad se borran también sus fotos, del disco y de la base.
+- Cada alta, edición o borrado avisa al sitio con `POST /api/revalidar` para que
+  deje de mostrar la versión en caché. El aviso nunca interrumpe la carga: si el
+  sitio no responde, se anota en el log y la actividad se guarda igual.
 - Para respaldar todo alcanza con copiar `public/uploads/` y hacer un dump de
   la base.
