@@ -7,8 +7,12 @@ arrastra las fotos y listo: la actividad aparece en la página del colegio.
 - **Panel**: http://localhost:8000/panel
 - **API que consume el sitio Next.js**: http://localhost:8000/api/actividades
 
-Requiere PHP 8.4 (con `pdo_mysql`, `gd`, `exif` y `fileinfo`) y MySQL 8.
-No usa Composer ni ninguna dependencia externa.
+Requiere PHP 8.3 o superior (con `pdo_mysql`, `gd`, `exif` y `fileinfo`) y
+MySQL 8. No usa Composer ni ninguna dependencia externa.
+
+> En desarrollo se usa PHP 8.4; en el servidor corre sobre el 8.3 que trae
+> Ubuntu 24.04. El código no usa sintaxis exclusiva de 8.4, así que funciona en
+> ambos. Ver `DEPLOY.md`, paso 5.2.
 
 ## Puesta en marcha
 
